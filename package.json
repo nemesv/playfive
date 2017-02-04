@@ -1,0 +1,23 @@
+{
+  "name": "playfive",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "p5": "^0.5.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nemesv/playfive.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nemesv/playfive/issues"
+  },
+  "homepage": "https://github.com/nemesv/playfive#readme"
+}
