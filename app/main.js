@@ -18,6 +18,19 @@ function keyTyped() {
     }
 }
 
+function touchStarted() {
+    if (touches.length > 0) {
+        var touch = touches[0];
+        if (
+            touch.x >= 0 && touch.x < 400 &&
+            touch.y >= 0 && touch.y < 400 
+        )
+        {
+            counter.new();
+        }
+    }
+}
+
 function Counter () {
     this.objects = [];
     this.number = 0;
