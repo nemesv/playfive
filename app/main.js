@@ -25,8 +25,15 @@ function Counter () {
     this.new = function () {
         this.objects = [];
         this.number = random(1, 10);
-        for(var i = 1; i < this.number; i++) {
-            this.objects.push(createVector(random(40,360), random(40,360)));
+        while(this.objects.length < this.number - 1) {
+            var newObject = createVector(random(45,355), random(45,355));
+
+            if (this.objects.every(function(item){
+                return p5.Vector.sub(item, newObject).mag() > 85;
+            }))
+            {
+                this.objects.push(newObject);
+            }
         }
     }
 
