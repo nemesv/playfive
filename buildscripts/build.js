@@ -6,6 +6,10 @@ var copy = {
     'node_modules/p5/lib/addons/p5.dom.js' : 'dist/p5.dom.js',
 };
 
+if (!fs.existsSync('dist')) {
+    fs.mkdirSync('dist');
+}
+
 Object.keys(copy).forEach(key => {
     fs.createReadStream(key).pipe(fs.createWriteStream(copy[key]));
 });
