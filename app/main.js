@@ -26,14 +26,14 @@ function Counter () {
         this.objects = [];
         this.number = random(1, 10);
         for(var i = 1; i < this.number; i++) {
-            this.objects.push(createVector(random(400), random(400)));
+            this.objects.push(createVector(random(40,360), random(40,360)));
         }
     }
 
     this.draw = function() {
         for(var i = 0; i < this.objects.length; i++) {
             var object = this.objects[i];
-            ellipse(object.x, object.y, 80, 80);
+            ellipse(object.x, object.y, 80);
         }
     }
 }
