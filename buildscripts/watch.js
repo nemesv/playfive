@@ -1,13 +1,16 @@
-var fs = require('fs');
+// var fs = require('fs');
+
+var bs = require("browser-sync").create();
 var build = require('./build.js');
 
-var timeout;
-
-fs.watch('./app', (eventType, filename) => {
-    if (!timeout) {
+bs.watch("./app/*.*").on("change",
+    function () {
         build.copy();
-        timeout = setTimeout(function () {
-            timeout = null
-        }, 1000);
-    }
+        bs.reload();
+    });
+
+bs.watch("index.html").on("change", bs.reload);
+
+bs.init({
+    server: "."
 });

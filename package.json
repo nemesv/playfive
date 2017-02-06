@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/nemesv/playfive/issues"
   },
-  "homepage": "https://github.com/nemesv/playfive#readme"
+  "homepage": "https://github.com/nemesv/playfive#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.7"
+  }
 }
