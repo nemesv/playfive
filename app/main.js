@@ -16,6 +16,23 @@ function keyTyped() {
     if (key === ' ') {
         counter.new();
     }
+    if (keyCode == ENTER) {
+        if (counter.isValid()) {
+            var div = select('#solution');
+            div.html("Right");
+            counter.new();
+        }
+        else{
+            var div = select('#solution');
+            div.html("Wrong");
+        }
+    }
+    var numbers = ["1","2","3","4","5","6","7","8","9","0"];
+    if (numbers.indexOf(key) > - 1) {
+        counter.guess(key);
+        var div = select('#solution');
+        div.html(key);
+    }
 }
 
 function touchStarted() {
@@ -37,8 +54,8 @@ function Counter () {
    
     this.new = function () {
         this.objects = [];
-        this.number = random(1, 10);
-        while(this.objects.length < this.number - 1) {
+        this.number = floor(random(1, 10));
+        while(this.objects.length < this.number) {
             var newObject = createVector(random(45,355), random(45,355));
 
             if (this.objects.every(function(item){
@@ -55,5 +72,13 @@ function Counter () {
             var object = this.objects[i];
             ellipse(object.x, object.y, 80);
         }
+    }
+
+    this.guess = function(guess) {
+        this.lastGuess = guess;
+    }
+
+    this.isValid = function() {
+        return this.lastGuess == this.number;
     }
 }
