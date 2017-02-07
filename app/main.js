@@ -65,6 +65,8 @@ function Counter () {
                 this.objects.push(newObject);
             }
         }
+        var div = select('#solution');
+        div.html("Count the circles and press ENTER!");
     }
 
     this.draw = function() {
