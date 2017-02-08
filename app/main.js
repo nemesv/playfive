@@ -8,7 +8,7 @@ function setup() {
 }
 
 function draw() {
-    background(233, 0, 0);
+    background(255, 255, 255);
     counter.draw();
 }
 
@@ -72,6 +72,7 @@ function Counter () {
     this.draw = function() {
         for(var i = 0; i < this.objects.length; i++) {
             var object = this.objects[i];
+            fill(255,0,0);
             ellipse(object.x, object.y, 80);
         }
     }
