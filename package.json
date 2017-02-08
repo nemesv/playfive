@@ -9,6 +9,7 @@
   "scripts": {
     "build": "node buildscripts/build.js",
     "watch": "node buildscripts/watch.js",
+    "deploy": "node buildscripts/deploy.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,8 @@
   },
   "homepage": "https://github.com/nemesv/playfive#readme",
   "devDependencies": {
-    "browser-sync": "^2.18.7"
+    "browser-sync": "^2.18.7",
+    "fs-extra": "^2.0.0",
+    "rimraf": "^2.5.4"
   }
 }
