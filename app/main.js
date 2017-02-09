@@ -32,10 +32,12 @@ function keyTyped() {
             var div = select('#solution');
             div.html("Right");
             counter.new();
+            counter.win();
         }
         else{
             var div = select('#solution');
             div.html("Wrong");
+            counter.loose();
         }
     }
     var numbers = ["1","2","3","4","5","6","7","8","9","0"];
@@ -61,6 +63,7 @@ function touchStarted() {
 
 function Counter () {
     this.objects = [];
+    this.score = 0;
     this.number = 0;
     var gap = 45;
     this.new = function () {
@@ -86,6 +89,9 @@ function Counter () {
             fill(255,0,0);
             ellipse(object.x, object.y, 80);
         }
+        fill(0,0,0);
+        textSize(30);
+        text(this.score, 10, 35);
     }
 
     this.guess = function(guess) {
@@ -94,5 +100,13 @@ function Counter () {
 
     this.isValid = function() {
         return this.lastGuess == this.number;
+    }
+
+    this.win = function() {
+        this.score += 1;
+    }
+
+    this.loose = function() {
+        this.score = 0;
     }
 }
