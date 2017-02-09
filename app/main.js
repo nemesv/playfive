@@ -1,7 +1,12 @@
 var counter;
+var header = 150;
+var effectiveWindowWidth, effectiveWindowHeight;
 
 function setup() {
-    var canvas = createCanvas(400, 400);
+    effectiveWindowWidth = windowWidth - 16;
+    effectiveWindowHeight = windowHeight - header;
+    var canvas = createCanvas(effectiveWindowWidth, effectiveWindowHeight);
+    
     canvas.parent('play');
     counter = new Counter();
     counter.new();
@@ -10,6 +15,12 @@ function setup() {
 function draw() {
     background(255, 255, 255);
     counter.draw();
+}
+
+function windowResized() {
+    effectiveWindowWidth = windowWidth - 16;
+    effectiveWindowHeight = windowHeight - header;
+    resizeCanvas(effectiveWindowWidth, effectiveWindowHeight);
 }
 
 function keyTyped() {
@@ -39,8 +50,8 @@ function touchStarted() {
     if (touches.length > 0) {
         var touch = touches[0];
         if (
-            touch.x >= 0 && touch.x < 400 &&
-            touch.y >= 0 && touch.y < 400 
+            touch.x >= 0 && touch.x < effectiveWindowWidth &&
+            touch.y >= 0 && touch.y < effectiveWindowHeight 
         )
         {
             counter.new();
@@ -51,12 +62,12 @@ function touchStarted() {
 function Counter () {
     this.objects = [];
     this.number = 0;
-   
+    var gap = 45;
     this.new = function () {
         this.objects = [];
         this.number = floor(random(1, 10));
         while(this.objects.length < this.number) {
-            var newObject = createVector(random(45,355), random(45,355));
+            var newObject = createVector(random(gap, effectiveWindowWidth - gap), random(gap, effectiveWindowHeight - gap));
 
             if (this.objects.every(function(item){
                 return p5.Vector.sub(item, newObject).mag() > 85;
