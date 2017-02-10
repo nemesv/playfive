@@ -24,7 +24,7 @@ function windowResized() {
 }
 
 function keyTyped() {
-    if (key === ' ') {
+    if (key === ' ' || counter.loosing) {
         counter.new();
     }
     if (keyCode == ENTER) {
@@ -36,7 +36,7 @@ function keyTyped() {
         }
         else{
             var div = select('#solution');
-            div.html("Wrong");
+            div.html("Wrong. Press any key to restart.");
             counter.loose();
         }
     }
@@ -67,6 +67,7 @@ function Counter () {
     this.number = 0;
     var gap = 45;
     this.new = function () {
+        this.loosing = false;
         this.objects = [];
         this.number = floor(random(1, 10));
         var newPosition;
@@ -170,5 +171,7 @@ function Counter () {
 
     this.loose = function() {
         this.score = 0;
+        this.objects = [];
+        this.loosing = true;
     }
 }
