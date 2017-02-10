@@ -31,8 +31,8 @@ function keyTyped() {
         if (counter.isValid()) {
             var div = select('#solution');
             div.html("Right");
-            counter.new();
             counter.win();
+            counter.new();
         }
         else{
             var div = select('#solution');
@@ -70,24 +70,44 @@ function Counter () {
         this.objects = [];
         this.number = floor(random(1, 10));
         while(this.objects.length < this.number) {
-            var newObject = createVector(random(gap, effectiveWindowWidth - gap), random(gap, effectiveWindowHeight - gap));
-
-            if (this.objects.every(function(item){
-                return p5.Vector.sub(item, newObject).mag() > 85;
-            }))
-            {
-                this.objects.push(newObject);
+            this.objects.push({
+                    position: this.findNewPosition(),
+                    color: color('red'),
+                    type: 'ellipse'
+                });
+        }
+        if (this.score > 5) {
+            for(var i = 0; i < floor(random(1, 5)); i++) {
+                this.objects.push({
+                    position: this.findNewPosition(),
+                    color: color('blue'),
+                    type: 'ellipse'
+                });
             }
         }
         var div = select('#solution');
-        div.html("Count the circles and press ENTER!");
+        div.html("Count the RED circles and press ENTER!");
+    }
+
+    this.findNewPosition = function() {
+        while(true) 
+        {
+            var newPosition = createVector(random(gap, effectiveWindowWidth - gap), random(gap, effectiveWindowHeight - gap));
+
+            if (this.objects.every(function(item){
+                return p5.Vector.sub(item.position, newPosition).mag() > 85;
+            }))
+            {
+                return newPosition;
+            }
+        }
     }
 
     this.draw = function() {
         for(var i = 0; i < this.objects.length; i++) {
             var object = this.objects[i];
-            fill(255,0,0);
-            ellipse(object.x, object.y, 80);
+            fill(object.color);
+            ellipse(object.position.x, object.position.y, 80);
         }
         fill(0,0,0);
         textSize(30);
