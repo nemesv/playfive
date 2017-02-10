@@ -24,19 +24,19 @@ function windowResized() {
 }
 
 function keyTyped() {
-    if (key === ' ') {
+    if (key === ' ' || counter.loosing) {
         counter.new();
     }
     if (keyCode == ENTER) {
         if (counter.isValid()) {
             var div = select('#solution');
             div.html("Right");
-            counter.new();
             counter.win();
+            counter.new();
         }
         else{
             var div = select('#solution');
-            div.html("Wrong");
+            div.html("Wrong. Press any key to restart.");
             counter.loose();
         }
     }
@@ -67,27 +67,90 @@ function Counter () {
     this.number = 0;
     var gap = 45;
     this.new = function () {
+        this.loosing = false;
         this.objects = [];
         this.number = floor(random(1, 10));
+        var newPosition;
         while(this.objects.length < this.number) {
-            var newObject = createVector(random(gap, effectiveWindowWidth - gap), random(gap, effectiveWindowHeight - gap));
-
-            if (this.objects.every(function(item){
-                return p5.Vector.sub(item, newObject).mag() > 85;
-            }))
+            newPosition = this.findNewPosition();
+            if (!newPosition)
             {
-                this.objects.push(newObject);
+                this.number--;
+                continue;
+            }
+            this.objects.push({
+                    position: newPosition,
+                    color: color('red'),
+                    type: 'ellipse'
+                });
+        }
+        var level2 = floor(random(1, 5));
+        if (this.score > 5) {
+            for(var i = 0; i < level2; i++) {
+                newPosition = this.findNewPosition();
+                if (!newPosition)
+                {
+                    level2--;
+                    continue;
+                }
+                this.objects.push({
+                    position: newPosition,
+                    color: color('blue'),
+                    type: 'ellipse'
+                });
+            }
+        }
+        var level3 = floor(random(1, 5));
+        if (this.score > 10) {
+            for(var i = 0; i < level3; i++) {
+                newPosition = this.findNewPosition();
+                if (!newPosition)
+                {
+                    level3--;
+                    continue;
+                }
+                this.objects.push({
+                    position: newPosition,
+                    color: color('red'),
+                    type: 'rect'
+                });
             }
         }
         var div = select('#solution');
-        div.html("Count the circles and press ENTER!");
+        div.html("Count the RED circles and press ENTER!");
+    }
+
+    this.findNewPosition = function() {
+        var counter = 0;
+        while(true) 
+        {
+            var newPosition = createVector(random(gap, effectiveWindowWidth - gap), random(gap, effectiveWindowHeight - gap));
+
+            if (this.objects.every(function(item){
+                return p5.Vector.sub(item.position, newPosition).mag() > 85;
+            }))
+            {
+                return newPosition;
+            }
+            counter++;
+            if (counter > 200)
+                break;
+        }
     }
 
     this.draw = function() {
         for(var i = 0; i < this.objects.length; i++) {
             var object = this.objects[i];
-            fill(255,0,0);
-            ellipse(object.x, object.y, 80);
+            fill(object.color);
+            switch (object.type)
+            {
+                case 'ellipse':
+                    ellipse(object.position.x, object.position.y, 80);
+                break;
+                case 'rect':
+                    rect(object.position.x - 40, object.position.y - 40, 80, 80, 20);
+                break;
+            }
         }
         fill(0,0,0);
         textSize(30);
@@ -108,5 +171,7 @@ function Counter () {
 
     this.loose = function() {
         this.score = 0;
+        this.objects = [];
+        this.loosing = true;
     }
 }
