@@ -85,6 +85,15 @@ function Counter () {
                 });
             }
         }
+        if (this.score > 10) {
+            for(var i = 0; i < floor(random(1, 5)); i++) {
+                this.objects.push({
+                    position: this.findNewPosition(),
+                    color: color('red'),
+                    type: 'rect'
+                });
+            }
+        }
         var div = select('#solution');
         div.html("Count the RED circles and press ENTER!");
     }
@@ -107,7 +116,15 @@ function Counter () {
         for(var i = 0; i < this.objects.length; i++) {
             var object = this.objects[i];
             fill(object.color);
-            ellipse(object.position.x, object.position.y, 80);
+            switch (object.type)
+            {
+                case 'ellipse':
+                    ellipse(object.position.x, object.position.y, 80);
+                break;
+                case 'rect':
+                    rect(object.position.x - 40, object.position.y - 40, 80, 80, 20);
+                break;
+            }
         }
         fill(0,0,0);
         textSize(30);
