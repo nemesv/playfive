@@ -69,26 +69,47 @@ function Counter () {
     this.new = function () {
         this.objects = [];
         this.number = floor(random(1, 10));
+        var newPosition;
         while(this.objects.length < this.number) {
+            newPosition = this.findNewPosition();
+            if (!newPosition)
+            {
+                this.number--;
+                continue;
+            }
             this.objects.push({
-                    position: this.findNewPosition(),
+                    position: newPosition,
                     color: color('red'),
                     type: 'ellipse'
                 });
         }
+        var level2 = floor(random(1, 5));
         if (this.score > 5) {
-            for(var i = 0; i < floor(random(1, 5)); i++) {
+            for(var i = 0; i < level2; i++) {
+                newPosition = this.findNewPosition();
+                if (!newPosition)
+                {
+                    level2--;
+                    continue;
+                }
                 this.objects.push({
-                    position: this.findNewPosition(),
+                    position: newPosition,
                     color: color('blue'),
                     type: 'ellipse'
                 });
             }
         }
+        var level3 = floor(random(1, 5));
         if (this.score > 10) {
-            for(var i = 0; i < floor(random(1, 5)); i++) {
+            for(var i = 0; i < level3; i++) {
+                newPosition = this.findNewPosition();
+                if (!newPosition)
+                {
+                    level3--;
+                    continue;
+                }
                 this.objects.push({
-                    position: this.findNewPosition(),
+                    position: newPosition,
                     color: color('red'),
                     type: 'rect'
                 });
@@ -99,6 +120,7 @@ function Counter () {
     }
 
     this.findNewPosition = function() {
+        var counter = 0;
         while(true) 
         {
             var newPosition = createVector(random(gap, effectiveWindowWidth - gap), random(gap, effectiveWindowHeight - gap));
@@ -109,6 +131,9 @@ function Counter () {
             {
                 return newPosition;
             }
+            counter++;
+            if (counter > 200)
+                break;
         }
     }
 
