@@ -1,11 +1,15 @@
 var counter;
 var header = 130;
 var effectiveWindowWidth, effectiveWindowHeight;
+var objectSize = 80;
 
 function setup() {
     effectiveWindowWidth = windowWidth - 16;
     effectiveWindowHeight = windowHeight - header;
     var canvas = createCanvas(effectiveWindowWidth, effectiveWindowHeight);
+
+    if (displayWidth < 700)
+        objectSize = 30;
 
     canvas.parent('play');
     counter = new Counter();
@@ -66,7 +70,7 @@ function Counter () {
     this.objects = [];
     this.score = 0;
     this.number = 0;
-    var gap = 45;
+    var gap = objectSize + 5;
     this.new = function () {
         this.loosing = false;
         this.objects = [];
@@ -128,7 +132,7 @@ function Counter () {
             var newPosition = createVector(random(gap, effectiveWindowWidth - gap), random(gap, effectiveWindowHeight - gap));
 
             if (this.objects.every(function(item){
-                return p5.Vector.sub(item.position, newPosition).mag() > 85;
+                return p5.Vector.sub(item.position, newPosition).mag() > objectSize * 2 + 5;
             }))
             {
                 return newPosition;
@@ -146,10 +150,10 @@ function Counter () {
             switch (object.type)
             {
                 case 'ellipse':
-                    ellipse(object.position.x, object.position.y, 80);
+                    ellipse(object.position.x, object.position.y, objectSize * 2);
                 break;
                 case 'rect':
-                    rect(object.position.x - 40, object.position.y - 40, 80, 80, 20);
+                    rect(object.position.x - objectSize, object.position.y - objectSize, objectSize * 2, objectSize * 2, 20);
                 break;
             }
         }
