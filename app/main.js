@@ -1,15 +1,28 @@
 var counter;
-var header = 150;
+var header = 130;
 var effectiveWindowWidth, effectiveWindowHeight;
 
 function setup() {
     effectiveWindowWidth = windowWidth - 16;
     effectiveWindowHeight = windowHeight - header;
     var canvas = createCanvas(effectiveWindowWidth, effectiveWindowHeight);
-    
+
     canvas.parent('play');
     counter = new Counter();
     counter.new();
+
+    var buttons = selectAll('.value-button');
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].mouseClicked(function () {
+            counter.guess(this.elt.innerHTML);
+        });
+    }
+
+    var enterButton = select('.enter-button');
+    enterButton.mouseClicked(function () {
+        counter.submitGuess();
+    });
 }
 
 function draw() {
@@ -28,23 +41,11 @@ function keyTyped() {
         counter.new();
     }
     if (keyCode == ENTER) {
-        if (counter.isValid()) {
-            var div = select('#solution');
-            div.html("Right");
-            counter.win();
-            counter.new();
-        }
-        else{
-            var div = select('#solution');
-            div.html("Wrong. Press any key to restart.");
-            counter.loose();
-        }
+        counter.submitGuess();
     }
     var numbers = ["1","2","3","4","5","6","7","8","9","0"];
     if (numbers.indexOf(key) > - 1) {
         counter.guess(key);
-        var div = select('#solution');
-        div.html(key);
     }
 }
 
@@ -159,6 +160,23 @@ function Counter () {
 
     this.guess = function(guess) {
         this.lastGuess = guess;
+        
+        var div = select('#solution');
+        div.html(this.lastGuess);
+    }
+
+    this.submitGuess = function(guess) {
+        if (this.isValid()) {
+            var div = select('#solution');
+            div.html("Right");
+            this.win();
+            this.new();
+        }
+        else{
+            var div = select('#solution');
+            div.html("Wrong. Press any key/touch to restart.");
+            this.loose();
+        }
     }
 
     this.isValid = function() {
