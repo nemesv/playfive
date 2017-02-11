@@ -4,13 +4,38 @@
     <script src="dist/p5.min.js"></script>
     <script src="dist/p5.dom.js"></script>
     <script src="dist/main.js"></script>
+    <style type="text/css">
+      .button-container {
+        display: flex;
+      }
+      
+      .value-button {
+        flex-grow: 1;
+        /* default 0 */
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+    </style>
   </head>
   <body style="overflow: hidden">
       <h1>Welcome at play with P5!</h1>
-      <div>Press 'SPACE' to draw some circles!</div>
+      <div id="solution" style="margin-bottom: 3px; font-size: 1.25em">
+      </div>
       <div id="play" style="border: 1px solid black; display: inline-block">
       </div>
-      <div id="solution"></div>
+      <div class="button-container">
+      <button class="value-button">1</button>
+      <button class="value-button">2</button>
+      <button class="value-button">3</button>
+      <button class="value-button">4</button>
+      <button class="value-button">5</button>
+      <button class="value-button">6</button>
+      <button class="value-button">7</button>
+      <button class="value-button">8</button>
+      <button class="value-button">9</button>
+      <button class="enter-button">ENTER</button>
+      </div>
       <footer>2017</footer>
   </body>
 </html>

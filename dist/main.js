@@ -1,15 +1,32 @@
 var counter;
-var header = 150;
+var header = 130;
 var effectiveWindowWidth, effectiveWindowHeight;
+var objectSize = 80;
 
 function setup() {
     effectiveWindowWidth = windowWidth - 16;
     effectiveWindowHeight = windowHeight - header;
     var canvas = createCanvas(effectiveWindowWidth, effectiveWindowHeight);
-    
+
+    if (displayWidth < 700)
+        objectSize = 30;
+
     canvas.parent('play');
     counter = new Counter();
     counter.new();
+
+    var buttons = selectAll('.value-button');
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].mouseClicked(function () {
+            counter.guess(this.elt.innerHTML);
+        });
+    }
+
+    var enterButton = select('.enter-button');
+    enterButton.mouseClicked(function () {
+        counter.submitGuess();
+    });
 }
 
 function draw() {
@@ -28,23 +45,11 @@ function keyTyped() {
         counter.new();
     }
     if (keyCode == ENTER) {
-        if (counter.isValid()) {
-            var div = select('#solution');
-            div.html("Right");
-            counter.win();
-            counter.new();
-        }
-        else{
-            var div = select('#solution');
-            div.html("Wrong. Press any key to restart.");
-            counter.loose();
-        }
+        counter.submitGuess();
     }
     var numbers = ["1","2","3","4","5","6","7","8","9","0"];
     if (numbers.indexOf(key) > - 1) {
         counter.guess(key);
-        var div = select('#solution');
-        div.html(key);
     }
 }
 
@@ -56,7 +61,8 @@ function touchStarted() {
             touch.y >= 0 && touch.y < effectiveWindowHeight 
         )
         {
-            counter.new();
+            if (counter.loosing)
+                counter.new();
         }
     }
 }
@@ -65,7 +71,7 @@ function Counter () {
     this.objects = [];
     this.score = 0;
     this.number = 0;
-    var gap = 45;
+    var gap = objectSize + 5;
     this.new = function () {
         this.loosing = false;
         this.objects = [];
@@ -127,7 +133,7 @@ function Counter () {
             var newPosition = createVector(random(gap, effectiveWindowWidth - gap), random(gap, effectiveWindowHeight - gap));
 
             if (this.objects.every(function(item){
-                return p5.Vector.sub(item.position, newPosition).mag() > 85;
+                return p5.Vector.sub(item.position, newPosition).mag() > objectSize * 2 + 5;
             }))
             {
                 return newPosition;
@@ -145,10 +151,10 @@ function Counter () {
             switch (object.type)
             {
                 case 'ellipse':
-                    ellipse(object.position.x, object.position.y, 80);
+                    ellipse(object.position.x, object.position.y, objectSize * 2);
                 break;
                 case 'rect':
-                    rect(object.position.x - 40, object.position.y - 40, 80, 80, 20);
+                    rect(object.position.x - objectSize, object.position.y - objectSize, objectSize * 2, objectSize * 2, 20);
                 break;
             }
         }
@@ -159,6 +165,23 @@ function Counter () {
 
     this.guess = function(guess) {
         this.lastGuess = guess;
+        
+        var div = select('#solution');
+        div.html("Your guess is: " + this.lastGuess);
+    }
+
+    this.submitGuess = function(guess) {
+        if (this.isValid()) {
+            var div = select('#solution');
+            div.html("Right");
+            this.win();
+            this.new();
+        }
+        else{
+            var div = select('#solution');
+            div.html("Wrong. Press any key/touch to restart.");
+            this.loose();
+        }
     }
 
     this.isValid = function() {
