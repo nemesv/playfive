@@ -61,7 +61,8 @@ function touchStarted() {
             touch.y >= 0 && touch.y < effectiveWindowHeight 
         )
         {
-            counter.new();
+            if (counter.loosing)
+                counter.new();
         }
     }
 }
@@ -166,7 +167,7 @@ function Counter () {
         this.lastGuess = guess;
         
         var div = select('#solution');
-        div.html(this.lastGuess);
+        div.html("Your guess is: " + this.lastGuess);
     }
 
     this.submitGuess = function(guess) {
