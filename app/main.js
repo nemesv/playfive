@@ -1,5 +1,5 @@
 var counter;
-var header = 130;
+var header = 160;
 var effectiveWindowWidth, effectiveWindowHeight;
 var objectSize = 80;
 
