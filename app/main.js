@@ -19,13 +19,19 @@ function setup() {
 
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].mouseClicked(function () {
-            counter.guess(this.elt.innerHTML);
+            if (counter.loosing)
+                counter.new();
+            else
+                counter.guess(this.elt.innerHTML);
         });
     }
 
     var enterButton = select('.enter-button');
     enterButton.mouseClicked(function () {
-        counter.submitGuess();
+        if (counter.loosing)
+            counter.new();
+        else
+            counter.submitGuess();
     });
 }
 
@@ -43,9 +49,11 @@ function windowResized() {
 function keyTyped() {
     if (key === ' ' || counter.loosing) {
         counter.new();
+        return;
     }
     if (keyCode == ENTER) {
         counter.submitGuess();
+        return;
     }
     var numbers = ["1","2","3","4","5","6","7","8","9","0"];
     if (numbers.indexOf(key) > - 1) {
@@ -73,6 +81,7 @@ function Counter () {
     this.number = 0;
     var gap = objectSize + 5;
     this.new = function () {
+        this.lastGuess = null;
         this.loosing = false;
         this.objects = [];
         this.number = floor(random(1, 10));
@@ -171,6 +180,8 @@ function Counter () {
     }
 
     this.submitGuess = function(guess) {
+        if (!this.lastGuess)
+            return;
         if (this.isValid()) {
             var div = select('#solution');
             div.html("Right");
