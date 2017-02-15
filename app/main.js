@@ -19,7 +19,7 @@ function setup() {
 
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].mouseClicked(function () {
-            if (counter.loosing)
+            if (counter.losing)
                 counter.new();
             else
                 counter.guess(this.elt.innerHTML);
@@ -28,7 +28,7 @@ function setup() {
 
     var enterButton = select('.enter-button');
     enterButton.mouseClicked(function () {
-        if (counter.loosing)
+        if (counter.losing)
             counter.new();
         else
             counter.submitGuess();
@@ -191,7 +191,7 @@ function Counter () {
         else{
             var div = select('#solution');
             div.html("Wrong. Press any key/touch to restart.");
-            this.loose();
+            this.lose();
         }
     }
 
@@ -203,9 +203,9 @@ function Counter () {
         this.score += 1;
     }
 
-    this.loose = function() {
+    this.lose = function() {
         this.score = 0;
         this.objects = [];
-        this.loosing = true;
+        this.losing = true;
     }
 }
