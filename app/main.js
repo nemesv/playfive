@@ -201,11 +201,34 @@ function Counter () {
 
     this.win = function() {
         this.score += 1;
+         analytics('send', {
+            hitType: 'event',
+            eventCategory: 'Counter',
+            eventAction: 'win',
+            eventLabel: 'Score-' + this.score,
+            eventValue: this.score
+        });
     }
 
     this.lose = function() {
+        analytics('send', {
+            hitType: 'event',
+            eventCategory: 'Counter',
+            eventAction: 'lose',
+            eventLabel: 'Score-' + this.score,
+            eventValue: this.score
+        });
         this.score = 0;
         this.objects = [];
         this.losing = true;
+    }
+}
+
+function analytics() {
+    if (window.ga) {
+        ga.apply(this, arguments);
+    }
+    else {
+        console.log(arguments);
     }
 }
