@@ -4,6 +4,7 @@
     <script src="dist/p5.min.js"></script>
     <script src="dist/p5.dom.js"></script>
     <script src="dist/main.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" />
     <style type="text/css">
       .button-container {
         display: flex;
@@ -16,9 +17,15 @@
       h1 {
         font-size: 1.5em;
       }
+      @media only screen and (max-width : 768px) {
+        .github-fork-ribbon {
+          visibility: hidden
+        }
+      }
     </style>
   </head>
   <body style="overflow: hidden">
+      <a class="github-fork-ribbon" href="https://github.com/nemesv/playfive/" title="Fork me on GitHub">Fork me on GitHub</a>     
       <h1>Welcome at play with P5!</h1>
       <div id="solution" style="margin-bottom: 3px; font-size: 1.25em">
       </div>
