@@ -50,7 +50,7 @@ window.windowResized = function() {
 }
 
 window.keyTyped = function() {
-    if (key === ' ' || counter.loosing) {
+    if (key === ' ' || counter.losing) {
         counter.new();
         return;
     }
@@ -72,7 +72,7 @@ window.touchStarted = function() {
             touch.y >= 0 && touch.y < effectiveWindowHeight 
         )
         {
-            if (counter.loosing)
+            if (counter.losing)
                 counter.new();
         }
     }

@@ -7,7 +7,7 @@ export default function Counter (objectSize, effectiveWindowWidth, effectiveWind
     var gap = objectSize + 5;
     this.new = function () {
         this.lastGuess = null;
-        this.loosing = false;
+        this.losing = false;
         this.objects = [];
         this.number = floor(random(1, 10));
         var newPosition;
