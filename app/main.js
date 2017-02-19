@@ -42,13 +42,13 @@ window.draw = function() {
     counter.draw();
 }
 
-function windowResized() {
+window.windowResized = function() {
     effectiveWindowWidth = windowWidth - 16;
     effectiveWindowHeight = windowHeight - header;
     resizeCanvas(effectiveWindowWidth, effectiveWindowHeight);
 }
 
-function keyTyped() {
+window.keyTyped = function() {
     if (key === ' ' || counter.loosing) {
         counter.new();
         return;
@@ -63,7 +63,7 @@ function keyTyped() {
     }
 }
 
-function touchStarted() {
+window.touchStarted = function() {
     if (touches.length > 0) {
         var touch = touches[0];
         if (
