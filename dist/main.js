@@ -1,9 +1,20 @@
+webpackJsonp([0],{
+
+/***/ 2:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_p5__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_p5___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_p5__);
+
+
 var counter;
 var header = 160;
 var effectiveWindowWidth, effectiveWindowHeight;
 var objectSize = 80;
 
-function setup() {
+window.setup = function() {
     effectiveWindowWidth = windowWidth - 16;
     effectiveWindowHeight = windowHeight - header;
     var canvas = createCanvas(effectiveWindowWidth, effectiveWindowHeight);
@@ -35,7 +46,7 @@ function setup() {
     });
 }
 
-function draw() {
+window.draw = function() {
     background(255, 255, 255);
     counter.draw();
 }
@@ -142,7 +153,7 @@ function Counter () {
             var newPosition = createVector(random(gap, effectiveWindowWidth - gap), random(gap, effectiveWindowHeight - gap));
 
             if (this.objects.every(function(item){
-                return p5.Vector.sub(item.position, newPosition).mag() > objectSize * 2 + 5;
+                return __WEBPACK_IMPORTED_MODULE_0_p5___default.a.Vector.sub(item.position, newPosition).mag() > objectSize * 2 + 5;
             }))
             {
                 return newPosition;
@@ -232,3 +243,7 @@ function analytics() {
         console.log(arguments);
     }
 }
+
+/***/ })
+
+},[2]);
