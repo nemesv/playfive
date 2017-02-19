@@ -1,9 +1,11 @@
+import p5 from 'p5';
+
 var counter;
 var header = 160;
 var effectiveWindowWidth, effectiveWindowHeight;
 var objectSize = 80;
 
-function setup() {
+window.setup = function() {
     effectiveWindowWidth = windowWidth - 16;
     effectiveWindowHeight = windowHeight - header;
     var canvas = createCanvas(effectiveWindowWidth, effectiveWindowHeight);
@@ -35,7 +37,7 @@ function setup() {
     });
 }
 
-function draw() {
+window.draw = function() {
     background(255, 255, 255);
     counter.draw();
 }
