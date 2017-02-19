@@ -10,6 +10,7 @@ var webpackConfig = require('../webpack.config');
 var tempDir = fs.mkdtempSync('../deploy');
 
 webpackConfig.output.path = path.join(tempDir, "dist");
+webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin());
 
 fs.createReadStream('index.html').pipe(fs.createWriteStream(path.join(tempDir, 'index.html')));
 
