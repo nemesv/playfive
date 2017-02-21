@@ -5,7 +5,9 @@ export default function Counter (objectSize, effectiveWindowWidth, effectiveWind
     this.score = 0;
     this.number = 0;
     var gap = objectSize + 5;
+
     this.new = function () {
+        this.final = false;
         this.lastGuess = null;
         this.losing = false;
         this.objects = [];
@@ -56,7 +58,14 @@ export default function Counter (objectSize, effectiveWindowWidth, effectiveWind
                 });
             }
         }
-        displayMessage("Count the RED circles and press ENTER!");
+        if (this.score > 20) {
+            displayMessage("Press any key/touch to restart.");
+            this.final = true;
+            this.objects.length = 0;
+            this.score = 0;
+        }
+        else
+            displayMessage("Count the RED circles and press ENTER!");
     }
 
     this.findNewPosition = function() {
@@ -93,7 +102,13 @@ export default function Counter (objectSize, effectiveWindowWidth, effectiveWind
         }
         fill(0,0,0);
         textSize(30);
-        text(this.score, 10, 35);
+        if (this.final) {
+            text("Congratulation!", (effectiveWindowWidth - textWidth("Congratulation!")) / 2, 75);
+            text("Level 20 reached.", (effectiveWindowWidth - textWidth("Level 20 reached.")) / 2, 115);
+        }
+        else {
+            text(this.score, 10, 35);
+        }
     }
 
     this.guess = function(guess) {

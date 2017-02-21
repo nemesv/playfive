@@ -22,7 +22,7 @@ window.setup = function() {
 
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].mouseClicked(function () {
-            if (counter.losing)
+            if (counter.losing || counter.final)
                 counter.new();
             else
                 counter.guess(this.elt.innerHTML);
@@ -31,7 +31,7 @@ window.setup = function() {
 
     var enterButton = select('.enter-button');
     enterButton.mouseClicked(function () {
-        if (counter.losing)
+        if (counter.losing || counter.final)
             counter.new();
         else
             counter.submitGuess();
@@ -50,7 +50,7 @@ window.windowResized = function() {
 }
 
 window.keyTyped = function() {
-    if (key === ' ' || counter.losing) {
+    if (key === ' ' || counter.losing || counter.final) {
         counter.new();
         return;
     }
@@ -72,7 +72,7 @@ window.touchStarted = function() {
             touch.y >= 0 && touch.y < effectiveWindowHeight 
         )
         {
-            if (counter.losing)
+            if (counter.losing || counter.final)
                 counter.new();
         }
     }
