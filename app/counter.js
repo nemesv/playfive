@@ -56,8 +56,7 @@ export default function Counter (objectSize, effectiveWindowWidth, effectiveWind
                 });
             }
         }
-        var div = select('#solution');
-        div.html("Count the RED circles and press ENTER!");
+        displayMessage("Count the RED circles and press ENTER!");
     }
 
     this.findNewPosition = function() {
@@ -99,23 +98,18 @@ export default function Counter (objectSize, effectiveWindowWidth, effectiveWind
 
     this.guess = function(guess) {
         this.lastGuess = guess;
-        
-        var div = select('#solution');
-        div.html("Your guess is: " + this.lastGuess);
+        displayMessage(`Your guess is: ${this.lastGuess}`);
     }
 
     this.submitGuess = function(guess) {
         if (!this.lastGuess)
             return;
         if (this.isValid()) {
-            var div = select('#solution');
-            div.html("Right");
             this.win();
             this.new();
         }
         else{
-            var div = select('#solution');
-            div.html("Wrong. Press any key/touch to restart.");
+            displayMessage("Wrong. Press any key/touch to restart.");
             this.lose();
         }
     }
@@ -146,6 +140,11 @@ export default function Counter (objectSize, effectiveWindowWidth, effectiveWind
         this.score = 0;
         this.objects = [];
         this.losing = true;
+    }
+
+    function displayMessage(message) {
+        var div = select('#solution');
+        div.html(message);
     }
 }
 
